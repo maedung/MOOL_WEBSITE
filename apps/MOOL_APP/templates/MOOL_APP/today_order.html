@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MOOL</title>
+</head>
+<body>
+  {% extends "MOOL_APP/header_footer.html" %}
+
+  {% block content %}
+  {% load static %}
+  <br>
+  <div class="main">
+    <h1>Today's Order</h1><br>
+    <form action="" method="post">
+      {% for restaurant in restaurants %}
+      <table class="table table-borderless" style="width: 60%; margin: auto;">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 300px;">{{ restaurant.name }}</th>
+            <th scope="col" style="width: 200px;">Products</th>
+            <th scope="col" style="width: 150px;">Quantity</th>
+            <th scope="col" style="width: 200px;"><a href="">View Invoice</a></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in restaurant.products.all %}
+          <tr>
+            <td></td>
+            <td>
+              <p style="width: 200px; margin: auto;">{{ product.name }}</p>
+            </td>
+            <td><input type="number" class="form-control" style="width: 150px; margin: auto;"></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <br><br>
+
+    </form>
+
+  </div>
+  {% endblock %}
+</body>
+</html>

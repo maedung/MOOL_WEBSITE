@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MOOL</title>
+</head>
+<body>
+  {% extends "MOOL_APP/header_footer.html" %}
+
+  {% block content %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/jquery-input-mask-phone-number@1.0.11/dist/jquery-input-mask-phone-number.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#yourphone').usPhoneFormat({
+        format: '(xxx) xxx-xxxx',
+      });
+    });
+  </script>
+  {% load static %}
+  <br>
+  <div class="main">
+    <div style="width: 1000px; margin: auto;">
+      <h1>Update Product</h1>
+      <form action="/edit_product/{{product.id}}" method="post">
+        {% csrf_token %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <span style="color: red;">{{ message }}</span><br>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" id="name" value="{{ product.name }}" >
+          </div>
+          <span style="color: red; margin-left: 180px">{{ errors.name }}</span>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Quantity</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" name="quantity" id="quantity" value="{{product.quantity}}">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Restaurants</label>
+          <div class="col-sm-10" style="text-align: left;">
+            {% for restaurant in restaurants %}
+                <input type="checkbox" name="checks[]" value="{{restaurant.id}}">
+                <label style="width: 200px;" for="{{restaurant.id}}">{{restaurant.name}}</label>
+                Price: $<input type="text" name="price[]" class="form-control" value="{{restaurant.setup.price}}" style="width: 100px; display: inline-block;"><br> 
+            {% endfor %}
+          </div>
+        </div>
+        <input type="submit" value="Update" class="btn btn-primary"><span>     </span><a href="../../main" class="btn btn-primary">Back</a><span>     </span><a class="btn btn-danger" href="../../delete_product/{{product.id}}">Delete</a>
+      </form>
+    </div>
+    <br>
+  </div>
+
+  {% endblock %}
+</body>
+</html>

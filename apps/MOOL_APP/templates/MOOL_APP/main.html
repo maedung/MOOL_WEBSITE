@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MOOL</title>
+</head>
+<body>
+  {% extends "MOOL_APP/header_footer.html" %}
+
+  {% block content %}
+  {% load static %}
+  <br>
+  <div class="main">
+    <h1>Restaurants</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Restaurant Code</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      {% if all_restaurants.count != 0 %}
+      <tbody>
+        {% for restaurant in all_restaurants %}
+        <tr>
+          <td>{{ restaurant.name }}</td>
+          <td>{{ restaurant.number }}</td>
+          <td>{{ restaurant.date }}</td>
+          <td>{{ restaurant.code }}</td>
+          <td><a href="/update_restaurant/{{ restaurant.id }}" class="btn btn-primary" type="submit">edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      {% endif %}
+    </table>
+    <h1>Products</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Restaurants</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      {% if all_products.count != 0 %}
+      <tbody>
+        {% for product in all_products %}
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>
+            {% for this_restaurant in product.restaurants.all %}
+            <span>{{ this_restaurant.code }}</span>
+            {% endfor %}
+          </td>
+          <td><a href="/update_product/{{ product.id }}" class="btn btn-primary" type="submit">edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      {% endif %}
+    </table>
+  </div>
+  {% endblock %}
+</body>
+</html>
